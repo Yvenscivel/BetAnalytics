@@ -1,0 +1,48 @@
+# --- Frontend (React + Vite + TS) ---
+node_modules/
+dist/
+dist-ssr/
+*.local
+.eslintcache
+
+# --- Backend (FastAPI / Python) ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.lib/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+.Python
+.pytest_cache/
+
+# --- Environment Variables (CRÍTICO) ---
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# --- Database (PostgreSQL / Local) ---
+*.sql
+*.sqlite
+# Se usar Docker para o banco:
+.db_data/
+
+# --- Tools (Tailwind / Shadcn / IDEs) ---
+.vscode/
+.idea/
+.DS_Store
+*.log
