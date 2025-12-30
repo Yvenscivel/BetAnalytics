@@ -14,7 +14,7 @@ def create_bet(db: Session, bet: schemas.BetCreate):
         lucro = -bet.valor_apostado
 
 # 2. Transforme o Schema em Model
-    db_bet = models.Bet(
+    db_bet = models.Bets(
         descricao_bet=bet.descricao_bet,
         valor_apostado=bet.valor_apostado,
         odd=bet.odd,
@@ -30,5 +30,5 @@ def create_bet(db: Session, bet: schemas.BetCreate):
     return db_bet
 
 def get_bets(db: Session):
-    return db.query(models.Bet).all()
+    return db.query(models.Bets).all()
 

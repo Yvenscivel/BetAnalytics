@@ -1,9 +1,13 @@
+import os 
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# Troque pelos seus dados do Postgres: usuario, senha, host e nome_do_banco
-SQLALCHEMY_DATABASE_URL = "postgresql://usuario:senha@localhost/betanalytics"
+# Carrega as variáveis do arquivo .env
+load_dotenv()
+
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
 
 # A engine é o motor que se comunica com o driver do banco
 engine = create_engine(SQLALCHEMY_DATABASE_URL)

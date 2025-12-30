@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:15
+    container_name: bet_analytics_db
+    restart: always
+    # O segredo está aqui:
+    env_file:
+      - ./backend/.env
+    environment:
+      # O Docker vai mapear as variáveis do .env para as que o Postgres entende
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
