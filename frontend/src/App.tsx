@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Sidebar } from "./components/Sidebar";
 import { FormularioNovaBet } from "./components/FormularioNovaBet";
 import { TabelaBets } from "./components/TabelaBets";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// Definição do tipo para todo o projeto
+// src/types.ts
 export interface Bet {
   id: string;
   time: string;
@@ -15,40 +16,53 @@ export interface Bet {
 export default function App() {
   const [apostas, setApostas] = useState<Bet[]>([]);
 
-  // Função que o formulário chama para salvar
   const adicionarNovaBet = (dados: { time: string; odds: number; valor: number }) => {
-    const novaAposta: Bet = {
+    const novaAposta:  Bet = {
       id: Math.random().toString(36).substr(2, 9),
       time: dados.time,
       odds: dados.odds,
       valor: dados.valor,
       status: "Pendente",
     };
-
-    setApostas([novaAposta, ...apostas]); // Adiciona a nova no topo
+    setApostas([novaAposta, ...apostas]);
   };
 
   return (
-    <div className="flex min-h-screen bg-zinc-950 text-white font-sans">
-      <Sidebar />
+    <BrowserRouter>
+      <div className="flex min-h-screen bg-zinc-950 text-white font-sans">
+        <Sidebar />
 
-      <main className="flex-1 p-8 overflow-y-auto">
-        <div className="max-w-4xl mx-auto space-y-10">
-          <header className="border-b border-zinc-800 pb-6">
-            <h1 className="text-3xl font-bold text-emerald-500">BetAnalytics</h1>
-            <p className="text-zinc-400">Gerencie suas entradas e acompanhe seus greens.</p>
-          </header>
+        <main className="flex-1 p-8 overflow-y-auto">
+          <div className="max-w-4xl mx-auto space-y-10">
+            
+            <Routes>
+              {/* ROTA PRINCIPAL (DASHBOARD/FORMULÁRIO) */}
+              <Route path="/" element={
+                <>
+                  <header className="border-b border-zinc-800 pb-6">
+                    <h1 className="text-3xl font-bold text-emerald-500">Dashboard</h1>
+                  </header>
+                  <FormularioNovaBet onAdicionar={adicionarNovaBet} />
+                </>
+              } />
 
-          <section>
-            <FormularioNovaBet onAdicionar={adicionarNovaBet} />
-          </section>
+              {/* ROTA DAS TABELAS (MINHAS BETS) */}
+              <Route path="/bets" element={
+                <>
+                  <header className="border-b border-zinc-800 pb-6">
+                    <h1 className="text-3xl font-bold text-emerald-500">Minhas Bets</h1>
+                  </header>
+                  <TabelaBets lista={apostas} />
+                </>
+              } />
 
-          <section>
-            <h2 className="text-xl font-bold mb-4">Histórico Recente</h2>
-            <TabelaBets lista={apostas} />
-          </section>
-        </div>
-      </main>
-    </div>
+              {/* OUTRAS ROTAS */}
+              <Route path="/stats" element={<h1 className="text-2xl">Relatórios (Em breve)</h1>} />
+            </Routes>
+
+          </div>
+        </main>
+      </div>
+    </BrowserRouter>
   );
 }
